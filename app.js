@@ -1,4 +1,6 @@
 let board = document.querySelector(".board");
+let players = document.querySelectorAll('.score span');
+let cursor = document.querySelector('.cursor');
 let r = document.querySelector(":root");
 let rs = getComputedStyle(r);
 let sizeDivision;
@@ -41,7 +43,7 @@ let bigPlan = [
 function boardSize(num){
   r.style.setProperty("--sizeDivision", `${num}`);
   sizeDivision = rs.getPropertyValue('--sizeDivision');
-  num == 9 ? thickness = 7 : thickness = 10;
+  thickness = num == 9 ? 7 : 10;
   r.style.setProperty("--sideThickness", `${thickness}px`)
 }
 
@@ -71,7 +73,7 @@ let renderBoard = (plan)=>{
     
         sideh =(checked,edges)=>{
           return `<div class='side sideh ${edges}' data-side-name="${sidehuid}" data-checked='${checked}' 
-          style="top:${condition1 * (board.clientWidth / +sizeDivision) - 5}px;
+          style="top:${condition1 * (board.clientWidth / +sizeDivision) - thickness/2}px;
           left:${condition2 * (board.clientHeight / +sizeDivision)}px;"></div>`;
         } 
     
@@ -81,7 +83,7 @@ let renderBoard = (plan)=>{
         sidev = (checked,edges)=>{
           return `<div class='side sidev ${edges}' data-side-name="${sidevuid}" data-checked='${checked}' 
           style="top:${condition1 * (board.clientWidth / +sizeDivision)}px;
-          left:${condition2 * (board.clientHeight / +sizeDivision) - 5}px;"></div>`;
+          left:${condition2 * (board.clientHeight / +sizeDivision) - thickness/2}px;"></div>`;
         }
     
     
@@ -157,7 +159,7 @@ let relations = (boxname)=>{
             users[user].points += 1;
             boxes[x].innerHTML = piece(users[user].frontcolor,users[user].sidecolor);
             ////////
-            //players[user].querySelector(".points").innerHTML = currentPlayer.points;
+            players[user].innerHTML = users[user].points;
         }
     } else if (boxes[x].getAttribute('data-box-name') == box2) {
       boxes[x].dataset.sides = `${parseInt(boxes[x].getAttribute('data-sides'))+1}`;
@@ -166,17 +168,23 @@ let relations = (boxname)=>{
             users[user].points += 1;
             boxes[x].innerHTML = piece(users[user].frontcolor,users[user].sidecolor);
             ////////
-            //players[user].querySelector(".points").innerHTML = currentPlayer.points;
+            players[user].innerHTML = users[user].points;
         }
     }
 };
 };
 
+///// preseclect the edges ////
 let edges = document.querySelectorAll('.edges');
-  edges.forEach(edge => {
-    relations(edge.getAttribute('data-side-name'));
-  });
+edges.forEach(edge => {
+  relations(edge.getAttribute('data-side-name'));
+});
 
+//// cursor colors /////
+function cursorColors(playerColor, borderColor){
+  r.style.setProperty('--playerColor', `${playerColor}`);
+  r.style.setProperty('--borderColor', `${borderColor}`);
+}
 
 
 window.addEventListener('click', (e)=>{
@@ -185,5 +193,30 @@ window.addEventListener('click', (e)=>{
     e.target.dataset.checked = "true";
     relations(e.target.getAttribute('data-side-name'));
     user == 1? user=0:user=1;
+    cursorColors(users[user].sidecolor,users[user].frontcolor);
   }
 });
+
+
+/// dragable cursor ///
+
+let mouseDown;
+
+cursor.addEventListener("mousedown", () => {
+    mouseDown = true;
+    console.log(mouseDown)
+
+    window.addEventListener("mousemove", (e) => {
+
+        if (mouseDown == true) {
+            cursor.style.top = `${e.clientY - (cursor.clientHeight/2)}px`;
+            cursor.style.left = `${e.clientX - (cursor.clientWidth/2)}px`;
+
+        }
+    })
+})
+
+
+window.addEventListener('mouseup', () => {
+    mouseDown = false;
+})

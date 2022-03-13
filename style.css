@@ -7,17 +7,75 @@
 :root {
     --sizeDivision: 5;
     --sideThickness:10px;
+    --playerColor: #400101;
+    --borderColor: #750000;
 }
 
 body {
     min-height: 100vh;
-    display: grid;
-    place-items: center;
+    width: 90%;
+    max-width: 350px;
+    /* display: grid;
+    place-items: center; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    font-family:'Courier New', Courier, monospace;
+    background: url(./assets/bgwall.jpg) center;
+    background-color: #0000009c;
+    background-blend-mode: color-dodge;
+}
+
+.container{
+    margin-top: 25px;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    gap: 16px;
+
+}
+
+.players{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    align-items: center;
+    padding: 0 10px;
+    border-radius: 8px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.menu{
+    height: 100%;
+    aspect-ratio: 1/1;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 8px;
+    cursor: pointer;
+}
+.menu span{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border-radius: 8px;
+    transition: all .3s;
+}
+.menu:hover span{
+    background-color: grey;
 }
 
 .plan {
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    /* height: 300px; */
+    aspect-ratio: 1/1;
 }
 
 .board {
@@ -29,7 +87,7 @@ body {
 .box {
     position: absolute;
     /* background: #070432; */
-    background: url('./assets/edge.jpg') center -3%;
+    background: url('./assets/edge.jpg') center 2%;
     width: calc(100% / var(--sizeDivision));
     height: calc(100% / var(--sizeDivision));
     box-shadow: inset 0 0 10px 5px black;
@@ -68,4 +126,23 @@ body {
 }
 .side.edges{
     box-shadow: inset 0 0 5px 1px rgba(255, 255, 255, 0.8);
+}
+
+.cursorContainer{
+    margin-bottom: 25px;
+    width: 40px;
+    height: 40px;
+    position: relative;
+}
+.cursor{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--playerColor);
+    border: 3px solid var(--borderColor);
+    z-index: 5;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
