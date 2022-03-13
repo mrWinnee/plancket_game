@@ -187,19 +187,20 @@ function cursorColors(playerColor, borderColor){
 }
 
 
-window.addEventListener('click', (e)=>{
+window.addEventListener('touchstart', (e)=>{
   if (e.target.className.includes("side") && e.target.getAttribute('data-checked') == "false"){
     e.target.classList.add(users[user].name);
     e.target.dataset.checked = "true";
     relations(e.target.getAttribute('data-side-name'));
     user == 1? user=0:user=1;
     cursorColors(users[user].sidecolor,users[user].frontcolor);
+    console.log(e)
   }
 });
 
 
 /// dragable cursor ///
-
+/* 
 let mouseDown;
 
 cursor.addEventListener("touchstart", () => {
@@ -223,4 +224,4 @@ window.addEventListener('touchend', () => {
     mouseDown = false;
     console.log(mouseDown)
   }
-})
+}) */
