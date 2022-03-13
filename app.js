@@ -202,21 +202,25 @@ window.addEventListener('click', (e)=>{
 
 let mouseDown;
 
-cursor.addEventListener("mousedown", () => {
+cursor.addEventListener("touchstart", () => {
     mouseDown = true;
     console.log(mouseDown)
 
-    window.addEventListener("mousemove", (e) => {
+    window.addEventListener("touchmove", (e) => {
 
         if (mouseDown == true) {
-            cursor.style.top = `${e.clientY - (cursor.clientHeight/2)}px`;
-            cursor.style.left = `${e.clientX - (cursor.clientWidth/2)}px`;
+          console.log(e.touches[0].clientY)
+            cursor.style.top = `${e.touches[0].clientY - (cursor.clientHeight/2)}px`;
+            cursor.style.left = `${e.touches[0].clientX - (cursor.clientWidth/2)}px`;
 
         }
     })
 })
 
 
-window.addEventListener('mouseup', () => {
+window.addEventListener('touchend', () => {
+  if (mouseDown == true) {
     mouseDown = false;
+    console.log(mouseDown)
+  }
 })

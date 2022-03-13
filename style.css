@@ -26,6 +26,7 @@ body {
     background: url(./assets/bgwall.jpg) center;
     background-color: #0000009c;
     background-blend-mode: color-dodge;
+    overflow: hidden;
 }
 
 .container{
